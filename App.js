@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Keyboard, View, TouchableWithoutFeedback} from 'react-native';
 import  SearchPanel  from './components/homescreen/SearchPanel';
 import {LinearGradient} from 'expo-linear-gradient';
 import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
@@ -7,12 +7,9 @@ import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolic
 export default function App() {
   return (
     <View style={styles.container}>
-      <LinearGradient colors={['#120634','#201964']} style={styles.linearGradient}>
-      {/* <Text>Exciting Stuff!</Text>
-        <Text>We have set off with wheretowatch!</Text>
-        <Text>Everything goes up from here!</Text>
-      <StatusBar style="auto" /> */}
-      </LinearGradient>
+      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        <LinearGradient colors={['#120634','#201964']} style={styles.linearGradient}></LinearGradient>
+      </TouchableWithoutFeedback>
       <SearchPanel></SearchPanel>
     </View>
   );

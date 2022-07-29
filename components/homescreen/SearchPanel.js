@@ -1,15 +1,19 @@
 //imports
 import React, {useRef, useState} from 'react';
-import {View, Alert, StyleSheet, Button, TextInput, SafeAreaView} from 'react-native';
+import {Animated, Alert, StyleSheet, Button, TextInput, SafeAreaView} from 'react-native';
 
 export default function SearchPanel(){
   //state & values
   const [searchBarInput, setSearchBarInput] = useState('');
+  const panelTranslation = useRef(new Animated.Value(150)).current;
   //view
   return(
-    <View style={styles.mainPanel}>
+    <Animated.View  style={[styles.mainPanel, 
+    {transform: [{translateY: panelTranslation}]}]}>
       <SafeAreaView style={{flexDirection: 'row', width: '100%', alignSelf: 'center', alignContent: 'center'}}>
         <TextInput
+          onFocus={() => animatePanelSetValue(0)}
+          onEndEditing={() => animatePanelSetValue(150)}
           style={styles.searchBar}
           onChangeText={setSearchBarInput}
           value={searchBarInput}
@@ -17,8 +21,15 @@ export default function SearchPanel(){
         />
         <Button title='Search' onPress={() => logThis(searchBarInput)}></Button>
       </SafeAreaView>
-    </View>
+    </Animated.View>
   );
+
+  function animatePanelSetValue(value){
+    Animated.timing(panelTranslation, {
+      toValue: value,
+      useNativeDriver: true,
+    }).start();
+  }
 }
 
 
@@ -34,7 +45,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     alignContent: 'center',
     width: '100%',
-    height: '50%',
+    height: '70%',
     backgroundColor: '#000516',
     //ios only
     borderTopRightRadius: '30%',
@@ -47,4 +58,3 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   }
 });
-
