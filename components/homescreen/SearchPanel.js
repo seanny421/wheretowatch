@@ -1,6 +1,8 @@
 //imports
 import React, {useRef, useState} from 'react';
-import {Animated, Alert, StyleSheet, Button, TextInput, SafeAreaView} from 'react-native';
+import {Animated, TouchableOpacity, StyleSheet, Button, TextInput, SafeAreaView} from 'react-native';
+import { logThis } from '../../Constants';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function SearchPanel(){
   //state & values
@@ -10,7 +12,7 @@ export default function SearchPanel(){
   return(
     <Animated.View  style={[styles.mainPanel, 
     {transform: [{translateY: panelTranslation}]}]}>
-      <SafeAreaView style={{flexDirection: 'row', width: '100%', alignSelf: 'center', alignContent: 'center'}}>
+      <SafeAreaView style={styles.searchBarContainer}>
         <TextInput
           onFocus={() => animatePanelSetValue(0)}
           onEndEditing={() => animatePanelSetValue(150)}
@@ -19,22 +21,20 @@ export default function SearchPanel(){
           value={searchBarInput}
           placeholder="Type movie/tv show here"
         />
-        <Button title='Search' onPress={() => logThis(searchBarInput)}></Button>
+        <TouchableOpacity style={styles.buttonContainer} onPress={() => logThis(searchBarInput)}>
+          <FontAwesome size={18} name='search' color='#000516'/>
+        </TouchableOpacity>
       </SafeAreaView>
     </Animated.View>
   );
 
+  //helper functions
   function animatePanelSetValue(value){
     Animated.timing(panelTranslation, {
       toValue: value,
       useNativeDriver: true,
     }).start();
   }
-}
-
-
-function logThis(text){
-  Alert.alert(text);
 }
 
 //styles
@@ -52,9 +52,32 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: '30%',
   },
   searchBar: {
-    margin: 50,
-    padding: 10,
+    width: '60%',
+    height: '100%', 
+    padding: 15,
     backgroundColor: '#fff',
-    borderRadius: 20,
+    // borderRadius: 25,
+    //ios only
+    borderBottomLeftRadius: 25,
+    borderTopLeftRadius: 25,
+
+  },
+  searchBarContainer: {
+    marginTop: 50,
+    height: 50,
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  buttonContainer: {
+    backgroundColor: '#fff',
+    padding: 15,
+    height: '100%',
+    // width: '50%',
+    //ios only
+    borderTopRightRadius: 25,
+    borderBottomRightRadius: 25,
+
   }
 });
