@@ -8,5 +8,4 @@ export const STICKY_PANEL_HEIGHT = 250;
 
 export function logThis(text){
     Alert.alert(text);
-
 }

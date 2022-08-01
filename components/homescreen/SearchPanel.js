@@ -40,6 +40,7 @@ export default function SearchPanel(){
 //styles
 const styles = StyleSheet.create({
   mainPanel: {
+    shadowColor: '#fff',
     position: 'absolute',
     bottom: '0%',
     alignSelf: 'center',
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: '30%',
   },
   searchBar: {
-    width: '60%',
+    width: '70%',
     height: '100%', 
     padding: 15,
     backgroundColor: '#fff',
@@ -68,9 +69,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: '100%',
     justifyContent: 'center',
+    letterSpacing: 0,
     alignItems: 'center'
   },
   buttonContainer: {
+    borderColor: 'red',
     backgroundColor: '#fff',
     padding: 15,
     height: '100%',
