@@ -1,21 +1,35 @@
-import { StyleSheet, Keyboard, View, TouchableWithoutFeedback, ImageBackground} from 'react-native';
-import  SearchPanel  from './components/homescreen/SearchPanel';
-import Carousel from './components/homescreen/Carousel.js';
+//imports
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
+import { ImageBackground, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
+import SearchPanel from './components/homescreen/SearchPanel';
 import { logThis } from './Constants';
 
-//TODO 
-//      - png works with <Image source={png} so decide if pngs are worth it or just restyle
+const Stack = createNativeStackNavigator();
+
+//TODO - clean up code (do we need to use LinearGradient twice?)
+//     - keep clean good code
 
 export default function App() {
   return (
     <View style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-            <LinearGradient colors={['#120634','#201964']} style={styles.linearGradient}>
-              <Carousel />
+            <NavigationContainer>
+            <LinearGradient colors={['#000516','#020d30']} locations={[0.5, 0.8]} 
+            style={styles.linearGradient}>
+                <Stack.Navigator screenOptions={{headerShown: false}}>
+                  <Stack.Screen
+                    name='Home'
+                    component={SearchPanel} />
+                  <Stack.Screen
+                    name='SearchList'
+                    //FIXME - don't use inline arrow function
+                    component={() => (<Text>Yo</Text>)} />
+                </Stack.Navigator>
             </LinearGradient>
+            </NavigationContainer>
         </TouchableWithoutFeedback>
-      <SearchPanel></SearchPanel>
     </View>
   );
 }
@@ -29,8 +43,8 @@ const styles = StyleSheet.create({
   },
   linearGradient: {
     flex: 1,
-    height: '90%',
-      width: '100%'
+    height: '100%',
+    width: '100%'
   },
   backGroundImage: {
     flex: 1,
