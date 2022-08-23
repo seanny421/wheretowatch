@@ -5,7 +5,7 @@ import React, { useRef, useState } from 'react';
 import { Image, SafeAreaView, StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import { logThis } from '../../Constants';
 
-export default function SearchPanel({ navigation }){
+export default function SearchPanel({ navigation, searchText }){
   //state & values
   const [searchBarInput, setSearchBarInput] = useState('');
   //view
@@ -23,7 +23,7 @@ export default function SearchPanel({ navigation }){
             value={searchBarInput}
             placeholder="Type movie/tv show here"
           />
-          <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('SearchList')}>
+          <TouchableOpacity style={styles.buttonContainer} onPress={() => navigation.navigate('SearchResults', {searchBarInput: searchBarInput})}>
             <FontAwesome size={18} name='search' color='#000516'/>
           </TouchableOpacity>
         </SafeAreaView>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.7,
     elevation: 2,
     shadowOffset: {
-      width: 0,
+      width: 4,
       height: 4
     },
   },

@@ -2,16 +2,20 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { LinearGradient } from 'expo-linear-gradient';
-import { ImageBackground, Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
-import SearchPanel from './components/homescreen/SearchPanel';
+import { useState } from 'react';
+import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'react-native';
 import { logThis } from './Constants';
-
+//components
+import SearchPanel from './components/homescreen/SearchPanel';
+import SearchResults from './components/searchresults/SearchResults';
 const Stack = createNativeStackNavigator();
 
 //TODO - clean up code (do we need to use LinearGradient twice?)
 //     - keep clean good code
 
 export default function App() {
+  //state
+  const [searchText, setSearchText] = useState('');
   return (
     <View style={styles.container}>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -21,11 +25,14 @@ export default function App() {
                 <Stack.Navigator screenOptions={{headerShown: false}}>
                   <Stack.Screen
                     name='Home'
-                    component={SearchPanel} />
+                    component={SearchPanel} 
+                    searchText={searchText}
+                    setSearchText={setSearchText}/>
                   <Stack.Screen
-                    name='SearchList'
+                    name='SearchResults'
                     //FIXME - don't use inline arrow function
-                    component={() => (<Text>Yo</Text>)} />
+                    component={SearchResults} 
+                    searchText={searchText}/>
                 </Stack.Navigator>
             </LinearGradient>
             </NavigationContainer>
