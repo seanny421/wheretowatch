@@ -1,9 +1,10 @@
 //imports
 import { MOVIE_API_KEY } from '@env';
+import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
 import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
-import symbolicateStackTrace from 'react-native/Libraries/Core/Devtools/symbolicateStackTrace';
+import TextTicker from 'react-native-text-ticker';
 import { splitByDelimiter } from '../../Constants';
 
 //view
@@ -28,7 +29,7 @@ export default function SearchResults({route, navigation}){
                     <Text style={styles.search_heading}>Results for: {searchBarInput}</Text>
                     <FlatList 
                         directionalLockEnabled={true}
-                        keyExtractor={(movie) => movie.poster_path}
+                        keyExtractor={(movie, i) => i}
                         data={searchResponseList}
                         renderItem={movieCard}
                     />
@@ -40,9 +41,18 @@ export default function SearchResults({route, navigation}){
     //functions
     function movieCard({item}){
         return(
-            <View style={styles.movie_card}>
-                <Image style={{width: '30%', height: 50, backgroundColor: 'blue'}} source={{uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path}}/>
-                <Text style={{color: '#fff'}}>{item.title}</Text>
+            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <View style={styles.movie_card}>
+                    <View style={{borderTopRightRadius: 10, borderTopLeftRadius: 10, overflow: 'hidden'}}>
+                        <Image style={styles.movie_poster} source={{uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path}}/>
+                    </View>
+                    <View style={{overflow: 'hidden', borderBottomRightRadius: 10, borderBottomLeftRadius: 10}} >
+                        <BlurView intensity={10} style={styles.text_container}>
+                            <TextTicker scrollSpeed={80} numberOfLines={1} style={styles.movie_title_text}>{item.title}</TextTicker>
+                        </BlurView>
+
+                    </View>
+                </View>
             </View>
         );
     }
@@ -71,9 +81,34 @@ export default function SearchResults({route, navigation}){
 
 //css
 const styles = StyleSheet.create({
+    text_container:{
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 10,
+        justifyContent: 'space-between',
+        backgroundColor: 'rgba(120, 125, 121, 0.15)', 
+        height: 50, 
+        borderBottomLeftRadius: 10, 
+        borderBottomRightRadius: 10,
+        //shadow
+    },
+    movie_title_text:{
+        fontSize: 15,
+        color: '#fff',
+        textAlign: 'center',
+        textAlignVertical: 'center',
+
+    },
+    movie_poster: {
+        width: '100%', 
+        height: 100, 
+        backgroundColor: 'blue',
+        // borderRadius: 10,
+    },
     search_heading: {
         color: '#f235c9', 
-        fontSize: 20, 
+        fontSize: 30, 
         marginBottom: 20
     },
     container: {
@@ -89,12 +124,19 @@ const styles = StyleSheet.create({
     },
     movie_card: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'col',
         marginVertical: 5,
         padding: 10,
-        width: '85%',
-        borderBottomColor: '#f235c9',
-        borderBottomWidth: 2,
+        width: '90%',
+        //shadow
+        // shadowColor: '#f235c9',
+        // shadowRadius: 2,
+        // shadowOpacity: 0.4,
+        // // elevation: 2,
+        // shadowOffset: {
+        // width: -2,
+        // height: 4
+        // },
     },
     linearGradient: {
         flex: 1,
