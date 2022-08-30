@@ -3,7 +3,7 @@ import { MOVIE_API_KEY } from '@env';
 import { BlurView } from 'expo-blur';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useEffect, useState } from 'react';
-import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableNativeFeedback, View } from 'react-native';
 import TextTicker from 'react-native-text-ticker';
 import { splitByDelimiter } from '../../Constants';
 
@@ -41,19 +41,21 @@ export default function SearchResults({route, navigation}){
     //functions
     function movieCard({item}){
         return(
-            <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-                <View style={styles.movie_card}>
-                    <View style={{borderTopRightRadius: 10, borderTopLeftRadius: 10, overflow: 'hidden'}}>
-                        <Image style={styles.movie_poster} source={{uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path}}/>
-                    </View>
-                    <View style={{overflow: 'hidden', borderBottomRightRadius: 10, borderBottomLeftRadius: 10}} >
-                        <BlurView intensity={10} style={styles.text_container}>
-                            <TextTicker scrollSpeed={80} numberOfLines={1} style={styles.movie_title_text}>{item.title}</TextTicker>
-                        </BlurView>
+            <TouchableNativeFeedback onPress={() => navigation.navigate('MoviePage', {movieObject: item})}>
+                <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                    <View style={styles.movie_card}>
+                        <View style={{borderTopRightRadius: 10, borderTopLeftRadius: 10, overflow: 'hidden'}}>
+                            <Image style={styles.movie_poster} source={{uri: 'https://image.tmdb.org/t/p/original/' + item.poster_path}}/>
+                        </View>
+                        <View style={{overflow: 'hidden', borderBottomRightRadius: 10, borderBottomLeftRadius: 10}} >
+                            <BlurView intensity={10} style={styles.text_container}>
+                                <TextTicker scrollSpeed={80} numberOfLines={1} style={styles.movie_title_text}>{item.title}</TextTicker>
+                            </BlurView>
 
+                        </View>
                     </View>
                 </View>
-            </View>
+            </TouchableNativeFeedback>
         );
     }
 

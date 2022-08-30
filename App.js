@@ -7,6 +7,7 @@ import { Keyboard, StyleSheet, Text, TouchableWithoutFeedback, View } from 'reac
 import { logThis } from './Constants';
 //components
 import SearchPanel from './components/homescreen/SearchPanel';
+import MoviePage from './components/searchresults/MoviePage.js';
 import SearchResults from './components/searchresults/SearchResults';
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +34,9 @@ export default function App() {
                     //FIXME - don't use inline arrow function
                     component={SearchResults} 
                     searchText={searchText}/>
+                  <Stack.Screen
+                    name='MoviePage'
+                    component={MoviePage}/>
                 </Stack.Navigator>
             </LinearGradient>
             </NavigationContainer>
