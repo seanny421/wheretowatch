@@ -31,7 +31,6 @@ export default function App() {
                     setSearchText={setSearchText}/>
                   <Stack.Screen
                     name='SearchResults'
-                    //FIXME - don't use inline arrow function
                     component={SearchResults} 
                     searchText={searchText}/>
                   <Stack.Screen
